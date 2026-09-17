@@ -3,7 +3,7 @@ import CompilerPluginSupport
 import PackageDescription
 
 let package = Package(
-    name: "swift-paramorphism-derivation",
+    name: "swift-paramorphism",
     platforms: [
         .macOS(.v27),
         .iOS(.v27),
@@ -12,32 +12,32 @@ let package = Package(
         .visionOS(.v27),
     ],
     products: [
-        .library(name: "Paramorphism Derivation", targets: ["Paramorphism Derivation"]),
-        .library(name: "Paramorphism Derivation Core", targets: ["Paramorphism Derivation Core"]),
+        .library(name: "Paramorphism Macro", targets: ["Paramorphism Macro"]),
+        .library(name: "Paramorphism Macro Core", targets: ["Paramorphism Macro Core"]),
     ],
     dependencies: [
         .package(url: "https://github.com/swift-atoms/swift-product.git", branch: "main"),
-        .package(url: "https://github.com/swift-molecules/swift-recursive-derivation.git", branch: "main"),
+        .package(url: "https://github.com/swift-molecules/swift-recursive.git", branch: "main"),
         .package(url: "https://github.com/swiftlang/swift-syntax.git", "603.0.2"..<"604.0.0"),
     ],
     targets: [
-        .target(name: "Paramorphism Derivation Core", dependencies: [
-            .product(name: "Recursive Derivation Core", package: "swift-recursive-derivation"),
+        .target(name: "Paramorphism Macro Core", dependencies: [
+            .product(name: "Recursive Macro Core", package: "swift-recursive"),
             .product(name: "SwiftSyntax", package: "swift-syntax"),
             .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
         ]),
-        .macro(name: "Paramorphism Derivation Macros", dependencies: [
-            "Paramorphism Derivation Core",
+        .macro(name: "Paramorphism Macro Plugin", dependencies: [
+            "Paramorphism Macro Core",
             .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
             .product(name: "SwiftSyntax", package: "swift-syntax"),
             .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
         ]),
-        .target(name: "Paramorphism Derivation", dependencies: [
-            "Paramorphism Derivation Macros",
+        .target(name: "Paramorphism Macro", dependencies: [
+            "Paramorphism Macro Plugin",
             .product(name: "Product", package: "swift-product"),
         ]),
-        .testTarget(name: "Paramorphism Derivation Tests", dependencies: [
-            "Paramorphism Derivation",
+        .testTarget(name: "Paramorphism Macro Tests", dependencies: [
+            "Paramorphism Macro",
             .product(name: "Product", package: "swift-product"),
         ]),
     ],
