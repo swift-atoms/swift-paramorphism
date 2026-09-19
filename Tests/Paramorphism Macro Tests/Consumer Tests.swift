@@ -1,7 +1,11 @@
+import Functor_Base_Macro
+import Recursive_Macro
 import Paramorphism_Macro
 import Product
 import Testing
 
+@FunctorBase
+@Recursive
 @Paramorphism
 private indirect enum Natural {
     case zero
