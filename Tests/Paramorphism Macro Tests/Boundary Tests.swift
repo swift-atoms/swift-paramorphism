@@ -1,7 +1,7 @@
 import Functor_Base_Macro
-import Recursive_Macro
 import Paramorphism_Macro
 import Product
+import Recursive_Macro
 import Testing
 
 @FunctorBase
@@ -19,7 +19,7 @@ struct `Paramorphism boundaries` {
         let result = Count.zero.paramorphism { (layer: Count.Base<Product<Count, Int>>) -> Int in
             switch layer {
             case .zero: 0
-            case let .successor(child): child.values.1 + 1
+            case .successor(let child): child.values.1 + 1
             }
         }
         #expect(result == 0)
@@ -31,7 +31,7 @@ struct `Paramorphism boundaries` {
         let childIsZero = three.paramorphism { (layer: Count.Base<Product<Count, [Bool]>>) -> [Bool] in
             switch layer {
             case .zero: []
-            case let .successor(child):
+            case .successor(let child):
                 if case .zero = child.values.0 { child.values.1 + [true] } else { child.values.1 + [false] }
             }
         }

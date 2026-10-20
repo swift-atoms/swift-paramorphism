@@ -1,7 +1,7 @@
 import Functor_Base_Macro
-import Recursive_Macro
 import Paramorphism_Macro
 import Product
+import Recursive_Macro
 import Testing
 
 @FunctorBase
@@ -19,7 +19,7 @@ func `paramorphism exposes each child and its folded result`() {
         (layer: Natural.Base<Product<Natural, Int>>) -> Int in
         switch layer {
         case .zero: 0
-        case let .successor(child): child.values.1 + 1
+        case .successor(let child): child.values.1 + 1
         }
     }
     #expect(count == 2)

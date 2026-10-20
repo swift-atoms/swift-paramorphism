@@ -5,9 +5,11 @@ public enum Derivation {}
 
 extension Derivation {
     public static func expansion(of declaration: EnumDeclSyntax) -> [DeclSyntax] {
-        let access = declaration.modifiers.contains { $0.name.tokenKind == .keyword(.public) }
+        let access =
+            declaration.modifiers.contains { $0.name.tokenKind == .keyword(.public) }
             ? "public " : ""
-        return ["""
+        return [
+            """
             \(raw: access)func paramorphism<Result>(
                 _ algebra: (Base<Product<Self, Result>>) -> Result
             ) -> Result {
@@ -15,6 +17,7 @@ extension Derivation {
                     Product(child, child.paramorphism(algebra))
                 })
             }
-            """]
+            """
+        ]
     }
 }
