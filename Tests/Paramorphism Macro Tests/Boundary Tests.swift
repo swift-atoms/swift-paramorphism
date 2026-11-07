@@ -12,29 +12,33 @@ private indirect enum Count {
     case successor(Count)
 }
 
-@Suite
-struct `Paramorphism boundaries` {
-    @Test
-    func `the base case folds without a child`() {
-        let result = Count.zero.paramorphism { (layer: Count.Base<Product<Count, Int>>) -> Int in
-            switch layer {
-            case .zero: 0
-            case .successor(let child): child.values.1 + 1
-            }
-        }
-        #expect(result == 0)
-    }
+enum `Boundary Tests` {}
 
-    @Test
-    func `each layer sees its original child next to the folded one`() {
-        let three = Count.successor(.successor(.successor(.zero)))
-        let childIsZero = three.paramorphism { (layer: Count.Base<Product<Count, [Bool]>>) -> [Bool] in
-            switch layer {
-            case .zero: []
-            case .successor(let child):
-                if case .zero = child.values.0 { child.values.1 + [true] } else { child.values.1 + [false] }
+extension `Boundary Tests` {
+    @Suite
+    struct `Paramorphism boundaries` {
+        @Test
+        func `the base case folds without a child`() {
+            let result = Count.zero.paramorphism { (layer: Count.Base<Product<Count, Int>>) -> Int in
+                switch layer {
+                case .zero: 0
+                case .successor(let child): child.values.1 + 1
+                }
             }
+            #expect(result == 0)
         }
-        #expect(childIsZero == [true, false, false])
+
+        @Test
+        func `each layer sees its original child next to the folded one`() {
+            let three = Count.successor(.successor(.successor(.zero)))
+            let childIsZero = three.paramorphism { (layer: Count.Base<Product<Count, [Bool]>>) -> [Bool] in
+                switch layer {
+                case .zero: []
+                case .successor(let child):
+                    if case .zero = child.values.0 { child.values.1 + [true] } else { child.values.1 + [false] }
+                }
+            }
+            #expect(childIsZero == [true, false, false])
+        }
     }
 }
