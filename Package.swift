@@ -50,7 +50,10 @@ let package = Package(
                 .product(name: "Recursive Macro", package: "swift-recursive"),
                 .product(name: "Functor Base Macro", package: "swift-functor"),
                 .target(name: "Paramorphism Macro"),
+                .target(name: "Paramorphism Macro Core"),
                 .product(name: "Product", package: "swift-product"),
+                .product(name: "SwiftParser", package: "swift-syntax"),
+                .product(name: "SwiftSyntax", package: "swift-syntax"),
             ]
         ),
     ],
